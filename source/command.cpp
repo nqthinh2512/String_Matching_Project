@@ -29,7 +29,7 @@ void execute_algorithm(string alg, string outputFile, vector<vector<char>> &dict
         long long comp = 0;
         for(int i = 0; i < n; i++)
         {
-            comp = KMPSearch_2D_Comparisons(dict, testCase[i]);
+            comp += KMPSearch_2D_Comparisons(dict, testCase[i]);
         }
         writeAlgorithmCompTime(alg, comp, duration, outputFile);
     }

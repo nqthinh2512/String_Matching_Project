@@ -39,7 +39,10 @@ void writeAlgorithmCompTime(string name, int cmp, chrono::duration<double> time,
 {
     ofstream fout;
     if (cnt == 0)
+    {
         fout.open(filename, ios::out);
+        cnt += 1;
+    }
     else
         fout.open(filename, ios::out | ios::app);
 

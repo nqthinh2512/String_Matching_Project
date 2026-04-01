@@ -3,5 +3,5 @@ bug: not found
 
 ------------------------------------------
 Algorithm: KMP
-Comparisons: 34
-Execution Time: 0.0002622
+Comparisons: 69
+Execution Time: 0.0003335

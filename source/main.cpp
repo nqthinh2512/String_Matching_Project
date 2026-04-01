@@ -9,4 +9,5 @@ int main(int argc, char* argv[])
     vector<string> testCase;
     readInputFile(string(argv[4]), dict, testCase);
     execute_algorithm(string(argv[2]), string(argv[6]), dict, testCase);
+    return 0;
 }
