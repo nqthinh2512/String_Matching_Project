@@ -88,7 +88,7 @@ void execute_algorithm(string alg, string outputFile, vector<vector<char>> &dict
         }
         writeAlgorithmCompTime(alg, comp, duration, outputFile);
     }
-    else if(alg == "za")
+    else if (alg == "za")
     {
         auto start = chrono::high_resolution_clock::now();
         int n = testCase.size();

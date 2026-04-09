@@ -634,21 +634,27 @@ long long rabinKarp2Dcmp(const vector<vector<char>> &grid, const string &pattern
 // Z-ALGORITHM (BONUS POINT)
 // =====================================================================
 
-void getZarr(const string &str, vector<int> &Z) {
+void getZarr(const string &str, vector<int> &Z)
+{
     int n = str.length();
     int L = 0, R = 0;
-    for (int i = 1; i < n; ++i) {
-        if (i > R) {
+    for (int i = 1; i < n; ++i)
+    {
+        if (i > R)
+        {
             L = R = i;
             while (R < n && str[R - L] == str[R])
                 R++;
             Z[i] = R - L;
             R--;
-        } else {
+        }
+        else
+        {
             int k = i - L;
             if (Z[k] < R - i + 1)
                 Z[i] = Z[k];
-            else {
+            else
+            {
                 L = i;
                 while (R < n && str[R - L] == str[R])
                     R++;
@@ -659,30 +665,44 @@ void getZarr(const string &str, vector<int> &Z) {
     }
 }
 
-long long getZarr_cmp(const string &str, vector<int> &Z) {
+long long getZarr_cmp(const string &str, vector<int> &Z)
+{
     long long comps = 0;
     int n = str.length();
     int L = 0, R = 0;
-    for (int i = 1; i < n; ++i) {
-        if (i > R) {
+    for (int i = 1; i < n; ++i)
+    {
+        if (i > R)
+        {
             L = R = i;
-            while (R < n) {
+            while (R < n)
+            {
                 comps++;
-                if (str[R - L] == str[R]) R++;
-                else break;
+                if (str[R - L] == str[R])
+                    R++;
+                else
+                    break;
             }
             Z[i] = R - L;
             R--;
-        } else {
+        }
+        else
+        {
             int k = i - L;
-            if (Z[k] < R - i + 1) {
+            if (Z[k] < R - i + 1)
+            {
                 Z[i] = Z[k];
-            } else {
+            }
+            else
+            {
                 L = i;
-                while (R < n) {
+                while (R < n)
+                {
                     comps++;
-                    if (str[R - L] == str[R]) R++;
-                    else break;
+                    if (str[R - L] == str[R])
+                        R++;
+                    else
+                        break;
                 }
                 Z[i] = R - L;
                 R--;
@@ -692,40 +712,49 @@ long long getZarr_cmp(const string &str, vector<int> &Z) {
     return comps;
 }
 
-vector<MatchResult> ZSearch_2D(const vector<vector<char>> &grid, const string &pattern) {
+vector<MatchResult> ZSearch_2D(const vector<vector<char>> &grid, const string &pattern)
+{
     vector<MatchResult> results;
     int m = pattern.length();
-    if (m == 0 || grid.empty() || grid[0].empty()) return results;
+    if (m == 0 || grid.empty() || grid[0].empty())
+        return results;
 
     int Rows = grid.size();
     int Cols = grid[0].size();
 
-    for (int r = 0; r < Rows; r++) {
+    for (int r = 0; r < Rows; r++)
+    {
         string textStr(grid[r].begin(), grid[r].end());
         string concat = pattern + "$" + textStr;
         int l = concat.length();
         vector<int> Z(l, 0);
         getZarr(concat, Z);
 
-        for (int i = 0; i < l; ++i) {
-            if (Z[i] == m) {
+        for (int i = 0; i < l; ++i)
+        {
+            if (Z[i] == m)
+            {
                 int startIdx = i - m - 1;
                 results.push_back({r, startIdx, r, startIdx + m - 1});
             }
         }
     }
 
-    for (int c = 0; c < Cols; c++) {
+    for (int c = 0; c < Cols; c++)
+    {
         string textStr = "";
-        for (int r = 0; r < Rows; r++) textStr += grid[r][c];
-        
+        for (int r = 0; r < Rows; r++)
+            textStr += grid[r][c];
+
         string concat = pattern + "$" + textStr;
         int l = concat.length();
         vector<int> Z(l, 0);
         getZarr(concat, Z);
 
-        for (int i = 0; i < l; ++i) {
-            if (Z[i] == m) {
+        for (int i = 0; i < l; ++i)
+        {
+            if (Z[i] == m)
+            {
                 int startIdx = i - m - 1;
                 results.push_back({startIdx, c, startIdx + m - 1, c});
             }
@@ -734,24 +763,29 @@ vector<MatchResult> ZSearch_2D(const vector<vector<char>> &grid, const string &p
     return results;
 }
 
-long long ZSearch_2D_cmp(const vector<vector<char>> &grid, const string &pattern) {
+long long ZSearch_2D_cmp(const vector<vector<char>> &grid, const string &pattern)
+{
     long long total_comps = 0;
     int m = pattern.length();
-    if (m == 0 || grid.empty() || grid[0].empty()) return 0;
+    if (m == 0 || grid.empty() || grid[0].empty())
+        return 0;
 
     int Rows = grid.size();
     int Cols = grid[0].size();
 
-    for (int r = 0; r < Rows; r++) {
+    for (int r = 0; r < Rows; r++)
+    {
         string textStr(grid[r].begin(), grid[r].end());
         string concat = pattern + "$" + textStr;
         vector<int> Z(concat.length(), 0);
         total_comps += getZarr_cmp(concat, Z);
     }
 
-    for (int c = 0; c < Cols; c++) {
+    for (int c = 0; c < Cols; c++)
+    {
         string textStr = "";
-        for (int r = 0; r < Rows; r++) textStr += grid[r][c];
+        for (int r = 0; r < Rows; r++)
+            textStr += grid[r][c];
         string concat = pattern + "$" + textStr;
         vector<int> Z(concat.length(), 0);
         total_comps += getZarr_cmp(concat, Z);
